@@ -1,0 +1,172 @@
+$bg0:           #282828;
+$bg1:           #3c3836;
+$bg2:           #504945;
+$fg1:           #ebdbb2;
+$yellow:        #d79921;
+$yellow-bright: #fabd2f;
+$blue-bright:   #83a598;
+
+window {
+    background-color: transparent;
+}
+
+.menu-container {
+    background-color: $bg0;
+    border: 2px solid $yellow;
+    border-radius: 14px;
+    padding: 10px;
+}
+
+.menu-item {
+    all: unset;
+    background-color: #3c3836;
+    background-image: none;
+    box-shadow: none;
+    border-radius: 10px;
+    padding: 10px 14px;
+    transition: all 200ms ease-in-out;
+}
+
+.menu-item:hover {
+    background-color: #504945;
+    border: 1px solid #83a598;
+}
+
+.menu-item:active,
+.menu-item:focus {
+    background-color: #3c3836;
+    box-shadow: none;
+    outline: none;
+}
+
+.menu-icon {
+    color: #fabd2f;
+    font-size: 18px;
+    min-width: 20px;
+}
+
+.menu-label {
+    color: #ebdbb2;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+
+
+
+
+
+
+
+
+.wifi-switch {
+    all: unset;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    transition: all 200ms ease-in-out;
+}
+
+.wifi-switch.on {
+    background-color: $blue-bright;
+    color: $bg0;
+}
+
+.wifi-switch.off {
+    background-color: $bg2;
+    color: $fg1;
+}
+
+.wifi-active {
+    border: 1px solid $blue-bright;
+}
+
+.wifi-input {
+    background-color: $bg2;
+    color: $fg1;
+    border-radius: 8px;
+    padding: 6px 10px;
+    border: 1px solid $yellow;
+}
+
+.wifi-btn-label {
+    color: $fg1;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.wifi-confirm-btn {
+    all: unset;
+    background-color: $blue-bright;
+    border-radius: 8px;
+    padding: 6px 12px;
+    transition: all 200ms ease-in-out;
+}
+
+.wifi-confirm-btn:hover {
+    background-color: #9ecbdf;
+}
+
+.wifi-cancel-btn {
+    all: unset;
+    background-color: $bg2;
+    border: 1px solid $yellow;
+    border-radius: 8px;
+    padding: 6px 12px;
+    transition: all 200ms ease-in-out;
+}
+
+.wifi-cancel-btn:hover {
+    background-color: $bg1;
+    border-color: $yellow-bright;
+}
+
+
+
+
+.clock-time {
+    color: $yellow-bright;
+    font-size: 26px;
+    font-weight: 800;
+    margin-top: 6px;
+}
+
+.clock-date {
+    color: #a89984;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+calendar {
+    background-color: $bg1;
+    color: $fg1;
+    border-radius: 10px;
+    padding: 8px;
+    font-size: 12px;
+}
+
+calendar:selected {
+    background-color: $blue-bright;
+    color: $bg0;
+    border-radius: 6px;
+}
+
+calendar.header {
+    background-color: $bg1;
+    color: $yellow-bright;
+    font-weight: 700;
+}
+
+calendar.button {
+    color: $yellow-bright;
+    background-color: transparent;
+}
+
+calendar.highlight {
+    color: $fg1;
+}
+
+calendar:indeterminate {
+    color: #665c54;
+}

@@ -1,0 +1,11 @@
+configuration {
+    modi: "drun,run,window";
+    show-icons: true;
+    icon-theme: "Papirus";
+    display-drun: "";
+    display-run: "";
+    display-window: "";
+    font: "JetBrainsMono Nerd Font 11";
+}
+
+@theme "~/.config/rofi/night-street-programs.rasi"

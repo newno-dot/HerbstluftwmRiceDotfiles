@@ -1,0 +1,15 @@
+@import "~/.config/rofi/night-street-common.rasi"
+
+window {
+    width: 480px;
+    location: center;
+}
+
+listview {
+    lines: 8;
+    columns: 1;
+}
+
+element-icon {
+    size: 28px;
+}

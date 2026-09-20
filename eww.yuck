@@ -1,0 +1,106 @@
+(defwindow my-menu
+  :monitor 0
+   :geometry (geometry :x "20px" :y "35px" :width "210px" :height "150px" :anchor "top left") :stacking "fg"
+  :exclusive false
+  :focusable true
+  (menu-box))
+
+(defwidget menu-box []
+  (box :class "menu-container" :orientation "v" :space-evenly false :spacing 6
+    (menu-item :icon "󰍃" :label "Logout"     :cmd "~/.config/eww/scripts/menu-logout.sh")
+    (menu-item :icon "󰀻" :label "Programms"  :cmd "~/.config/eww/scripts/menu-programs.sh")
+    (menu-item :icon "󰸉" :label "Wallpapers" :cmd "~/.config/eww/scripts/menu-wallpapers.sh")))
+
+(defwidget menu-item [icon label cmd]
+  (button :class "menu-item"
+          :onclick "bash -c 'eww close my-menu; sleep 0.15; ${cmd}' &"
+    (box :orientation "h" :space-evenly false :spacing 10
+      (label :class "menu-icon" :text icon)
+      (label :class "menu-label" :text label))))
+
+
+
+
+
+
+(defvar wifi_pass_input "")
+(defvar wifi_pass_ssid "")
+
+(defpoll wifi_status :interval "5s" "~/.config/eww/scripts/wifi-status.sh")
+(defpoll wifi_networks :interval "5s" "~/.config/eww/scripts/wifi-scan.sh")
+
+;; ===== Главное окно Wi-Fi =====
+(defwindow wifi-menu
+  :monitor 0
+  :geometry (geometry :x "-60px" :y "35px" :width "260px" :height "320px" :anchor "top right")
+  :stacking "fg"
+  :exclusive false
+  :focusable true
+  (wifi-menu-box))
+
+(defwidget wifi-menu-box []
+  (box :class "menu-container" :orientation "v" :space-evenly false :spacing 8
+    (box :orientation "h" :space-evenly false :spacing 8
+      (label :class "menu-icon" :text "󰤨")
+      (label :class "menu-label" :text "Wi-Fi")
+      (box :halign "end" :hexpand true
+        (button :class {wifi_status == "enabled" ? "wifi-switch on" : "wifi-switch off"}
+                :onclick "~/.config/eww/scripts/wifi-toggle-radio.sh &"
+          (label :text {wifi_status == "enabled" ? "ON" : "OFF"}))))
+    (scroll :vscroll true :height 220
+      (box :orientation "v" :space-evenly false :spacing 4
+        (for network in wifi_networks
+          (wifi-item :ssid {network.ssid} :signal {network.signal}
+                     :secured {network.secured} :active {network.active}))))))
+
+(defwidget wifi-item [ssid signal secured active]
+  (button :class {active ? "menu-item wifi-active" : "menu-item"}
+          :onclick "~/.config/eww/scripts/wifi-select.sh '${ssid}' '${secured}' '${active}' &"
+    (box :orientation "h" :space-evenly false :spacing 10
+      (label :class "menu-icon" :text {signal > 66 ? "󰤨" : signal > 33 ? "󰤢" : "󰤟"})
+      (label :class "menu-label" :text ssid :hexpand true :halign "start")
+      (label :class "menu-icon" :text "󰌾" :visible {secured})
+      (label :class "menu-icon" :text "✓" :visible {active}))))
+
+;; ===== Окно ввода пароля =====
+(defwindow wifi-password
+  :monitor 0
+  :geometry (geometry :x "-60px" :y "35px" :width "260px" :height "320px" :anchor "top right")
+  :stacking "fg"
+  :focusable true
+  (wifi-password-box))
+
+(defwidget wifi-password-box []
+  (box :class "menu-container" :orientation "v" :spacing 8
+    (label :class "menu-label" :text "Пароль для ${wifi_pass_ssid}" :limit-width 22)
+    (input :class "wifi-input" :password true :value wifi_pass_input
+           :onchange "eww update wifi_pass_input={}")
+    (box :orientation "h" :spacing 6
+  (button :class "wifi-confirm-btn"
+          :onclick "eww close wifi-password; ~/.config/eww/scripts/wifi-connect.sh '${wifi_pass_ssid}' '${wifi_pass_input}' &"
+    (label :class "wifi-btn-label" :text "Подключить"))
+  (button :class "wifi-cancel-btn" :onclick "eww close wifi-password"
+    (label :class "wifi-btn-label" :text "Отмена")))))
+
+
+
+
+(defpoll current_time :interval "1s" "date '+%H:%M:%S'")
+(defpoll current_date :interval "60s" "date '+%A, %d %B %Y'")
+
+(defwindow calendar-menu
+  :monitor 0
+  :geometry (geometry :x "-60px" :y "35px" :width "260px" :height "290px" :anchor "top right")
+  :stacking "fg"
+  :exclusive false
+  :focusable false
+  (calendar-box))
+
+(defwidget calendar-box []
+  (box :class "menu-container" :orientation "v" :space-evenly false :spacing 10
+    (box :orientation "v" :space-evenly false :spacing 2 :halign "center"
+      (label :class "clock-time" :text current_time)
+      (label :class "clock-date" :text current_date))
+    (calendar :class "eww-calendar"
+              :hexpand true
+              :show-details false)))
